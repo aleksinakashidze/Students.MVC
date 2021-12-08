@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewData["Title"] = "შეცდომა";
+}
+
+<h1 class="text-danger">შეცდომა.</h1>
+<h2 class="text-danger">შეცდომა მოხდა თქვენი მოთხოვნის დამუშავების პროცესში</h2>
+<div class="alert alert-danger">
+    <p>@ViewBag.ErrorMessage</p>
+</div>
+
+<h6>@Html.ActionLink("უკან დაბრუნება", "Index", "Students")</h6>
+

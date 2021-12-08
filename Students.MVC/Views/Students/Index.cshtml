@@ -1,0 +1,94 @@
+﻿@*@model IEnumerable<Students.Application.DTO.StudentDTO>*@
+@model StudentMVC.Helpers.PaginatedList<Students.Application.DTO.StudentDTO>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>სტუდენტების სია</h1>
+
+<p>
+    <a asp-action="Create">სტუდენტის დამატება</a>
+</p>
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            <input type="text" name="SearchString" placeholder=" ძებნა პირადი ნომერით" value="@ViewData["CurrentFilter"]" />
+
+            Start: <input type="date" name="startDate"  value="@ViewData["StartDate"]" />
+            End: <input type="date" name="endDate" value="@ViewData["EndDate"]"  />
+            <input type="submit" value="Search" class="btn btn-default" />
+            <a asp-action="Index">Back</a>
+        </p>
+    </div>
+</form>
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().LastName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().PersonalNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().DateOfBirth)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Gender)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PersonalNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateOfBirth)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Gender)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.StudentID">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.StudentID">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.StudentID">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
+
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex - 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @prevDisabled">
+       წინა
+    </a>
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex + 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @nextDisabled">
+       შემდეგი
+    </a>
